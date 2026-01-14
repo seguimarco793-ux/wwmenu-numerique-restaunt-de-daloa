@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestige Daloa - Edition Ultime</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;900&display=swap');
+
+        :root { 
+            --gold: #d4af37; --black: #050505; --gray: #121212;
+            --orange: #ff6600; --wave: #1c99ff; --mtn: #ffcc00; --moov: #009b3a;
+        }
+
+        body { font-family: 'Poppins', sans-serif; background: var(--black); margin: 0; color: white; scroll-behavior: smooth; }
+        .container { max-width: 500px; margin: auto; background: #0a0a0a; min-height: 100vh; border: 1px solid #222; position: relative; padding-bottom: 50px; }
+
+        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 3px solid var(--gold); }
+        header h1 { font-family: 'Playfair Display', serif; color: var(--gold); margin: 0; letter-spacing: 5px; text-transform: uppercase; font-size: 1.8rem; }
+        .stars { color: var(--gold); margin-top: 10px; font-size: 0.8rem; letter-spacing: 3px; }
+
+        .cat-title { background: linear-gradient(90deg, #1a1a1a, transparent); color: var(--gold); padding: 15px; font-weight: 900; border-left: 5px solid var(--gold); text-transform: uppercase; margin-top: 25px; font-size: 0.8rem; letter-spacing: 2px; }
+
+        .service-block { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #151515; gap: 15px; }
+        .photo-profil { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); overflow: hidden; flex-shrink: 0; }
+        .photo-profil img { width: 100%; height: 100%; object-fit: cover; }
+        .details { flex-grow: 1; }
+        .details h3 { margin: 0; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        
+        .btn-prix { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 900; transition: 0.3s; }
+        .btn-prix:active { transform: scale(0.9); background: var(--gold); color: black; }
+
+        /* PANIER ZONE */
+        .panier-zone { padding: 30px 20px; background: #000; border-top: 4px solid var(--gold); margin-top: 40px; }
+        .sous-total-bloc { background: #111; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222; }
+        .bloc-nom { color: var(--gold); font-size: 0.75rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .item-panier { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 0.85rem; }
+        .delete-btn { color: #ff4444; cursor: pointer; padding-left: 10px; }
+
+        .form-label { display: block; color: var(--gold); font-size: 0.7rem; font-weight: 900; text-transform: uppercase; margin-top: 15px; }
+        .input-prestige { width: 100%; background: #111; border: 2px solid var(--gold); color: white; padding: 15px; border-radius: 10px; font-size: 1rem; box-sizing: border-box; margin-top: 5px; outline: none; }
+        textarea.input-prestige { height: 80px; resize: none; font-family: inherit; }
+        
+        .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .pay-card { padding: 15px; border-radius: 10px; border: 2px solid #333; text-align: center; font-weight: 900; cursor: pointer; font-size: 0.75rem; transition: 0.3s; opacity: 0.6; }
+        .pay-card.active { border-color: white; opacity: 1; transform: scale(1.02); }
+
+        #view-statique { display: none; padding: 20px; }
+        #statut-final { background: white; color: black; padding: 30px; border-radius: 5px; font-family: 'Courier New', monospace; }
+
+        .btn-action { width: 100%; padding: 20px; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 0.9rem; text-decoration: none; }
+        .btn-valider { background: var(--gold); color: black; }
+        .btn-wa { background: #25D366; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>PRESTIGE DALOA</h1>
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+    </header>
+
+    <div id="view-boutique">
+        <div class="cat-title">⚜️ BLOC GARBA (5 SERVICES)</div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.37.jpeg"></div>
+            <div class="details"><h3>Poisson Thon Frit</h3>
+                <div style="display:flex; gap:5px;">
+                    <button class="btn-prix" onclick="ajouter('Thon 500', 500, 'GARBA')">500F</button>
+                    <button class="btn-prix" onclick="ajouter('Thon 1000', 1000, 'GARBA')">1000F</button>
+                </div>
+            </div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.33.jpeg"></div>
+            <div class="details"><h3>Attiéké Frais</h3><button class="btn-prix" onclick="ajouter('Attiéké', 100, 'GARBA')">100 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.34 (2).jpeg"></div>
+            <div class="details"><h3>Œuf de Ferme</h3><button class="btn-prix" onclick="ajouter('Oeuf', 100, 'GARBA')">100 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.34.jpeg"></div>
+            <div class="details"><h3>Alloco Sucré</h3><button class="btn-prix" onclick="ajouter('Alloco', 200, 'GARBA')">200 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 14.09.03.jpeg"></div>
+            <div class="details"><h3>Condiments (Piment/Oignon)</h3><button class="btn-prix" onclick="ajouter('Condiments', 100, 'GARBA')">100 F</button></div>
+        </div>
+
+        <div class="cat-title">🥘 PLATS LOURDS (1500F)</div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.33 (1).jpeg"></div>
+            <div class="details"><h3>Foutou Sauce Graine</h3><button class="btn-prix" onclick="ajouter('Foutou Graine', 1500, 'PLATS')">1500 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 14.31.52.jpeg"></div>
+            <div class="details"><h3>Riz Royal</h3><button class="btn-prix" onclick="ajouter('Riz Royal', 1500, 'PLATS')">1500 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 14.21.33.jpeg"></div>
+            <div class="details"><h3>Placali Sauce Kpala</h3><button class="btn-prix" onclick="ajouter('Placali', 1500, 'PLATS')">1500 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.36 (1).jpeg"></div>
+            <div class="details"><h3>Foutou Sauce Arachide</h3><button class="btn-prix" onclick="ajouter('Foutou Arachide', 1500, 'PLATS')">1500 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.35 (1).jpeg"></div>
+            <div class="details"><h3>Riz Ballin</h3><button class="btn-prix" onclick="ajouter('Riz Ballin', 1500, 'PLATS')">1500 F</button></div>
+        </div>
+
+        <div class="cat-title">🍻 BOISSONS FRAICHES</div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.36.jpeg"></div>
+            <div class="details"><h3>Bock (L'Ivoirienne)</h3>
+                <div style="display:flex; gap:5px;">
+                    <button class="btn-prix" onclick="ajouter('Bock G', 1000, 'BOISSONS')">1000F</button>
+                    <button class="btn-prix" onclick="ajouter('Bock P', 500, 'BOISSONS')">500F</button>
+                </div>
+            </div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 13.37.15.jpeg"></div>
+            <div class="details"><h3>Racine Fraîche</h3><button class="btn-prix" onclick="ajouter('Racine', 500, 'BOISSONS')">500 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 12.58.34 (1).jpeg"></div>
+            <div class="details"><h3>Bière Ivoire</h3><button class="btn-prix" onclick="ajouter('Ivoire', 600, 'BOISSONS')">600 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 13.55.18.jpeg"></div>
+            <div class="details"><h3>Castel Beer</h3><button class="btn-prix" onclick="ajouter('Castel', 800, 'BOISSONS')">800 F</button></div>
+        </div>
+        <div class="service-block">
+            <div class="photo-profil"><img src="WhatsApp Image 2026-01-11 at 13.58.00.jpeg"></div>
+            <div class="details"><h3>Beaufort Luxe</h3><button class="btn-prix" onclick="ajouter('Beaufort', 800, 'BOISSONS')">800 F</button></div>
+        </div>
+
+        <div class="panier-zone">
+            <h2 style="color:var(--gold); text-align:center;">VOTRE COMMANDE</h2>
+            <div id="panier-ordonne"></div>
+            <div style="font-size: 2.2rem; font-weight: 900; text-align: center; color: var(--gold); margin: 20px 0;"><span id="total-val">0</span> F</div>
+
+            <label class="form-label">👤 Votre Nom :</label>
+            <input type="text" id="nom-client" class="input-prestige" placeholder="Ex: Marc">
+
+            <label class="form-label">📍 Votre Adresse / Table :</label>
+            <input type="text" id="info-client" class="input-prestige" placeholder="Ex: Table 02 ou Quartier Air France">
+
+            <label class="form-label">📝 Note pour le Chef (Instructions) :</label>
+            <textarea id="note-chef" class="input-prestige" placeholder="Ex: Pas d'oignons dans le Garba, poisson bien grillé..."></textarea>
+
+            <label class="form-label">💳 Mode de Paiement :</label>
+            <div class="pay-grid">
+                <div class="pay-card" style="background:var(--orange); color:white;" onclick="selectPay(this, 'Orange')">ORANGE</div>
+                <div class="pay-card" style="background:var(--wave); color:white;" onclick="selectPay(this, 'Wave')">WAVE</div>
+                <div class="pay-card" style="background:var(--mtn); color:black;" onclick="selectPay(this, 'MTN')">MTN</div>
+                <div class="pay-card" style="background:var(--moov); color:white;" onclick="selectPay(this, 'Moov')">MOOV</div>
+            </div>
+
+            <button class="btn-action btn-valider" onclick="validerTout()">🚀 CONFIRMER L'ACHAT</button>
+            <button class="btn-action" style="background:linear-gradient(45deg, #bf953f, #fcf6ba, #b38728); color:black;" onclick="parrainer()">
+                <i class="fas fa-crown"></i> INVITER DES AMIS (PARRAINAGE)
+            </button>
+        </div>
+    </div>
+
+    <div id="view-statique">
+        <div id="statut-final">
+            <center><h2 style="margin:0;">PRESTIGE DALOA</h2><p>REÇU DE COMMANDE</p></center>
+            <div id="recu-infos"></div>
+            <div id="recu-ordonne" style="margin-top:10px;"></div>
+            <div id="recu-note" style="margin-top:10px; font-style:italic; border-top:1px dashed #ccc; padding-top:5px;"></div>
+            <hr>
+            <h1 id="recu-total" style="text-align:right;"></h1>
+        </div>
+        <a href="#" id="btn-wa-final" class="btn-action btn-wa" target="_blank"><i class="fab fa-whatsapp"></i> ENVOYER AU RESTO</a>
+        <button class="btn-action" style="background:#222; color:white;" onclick="revenir()">RETOUR / MODIFIER</button>
+    </div>
+</div>
+
+<audio id="bell" src="https://www.myinstants.com/media/sounds/service-bell-ring.mp3"></audio>
+
+<script>
+    let panier = [];
+    let modePay = "Espèces";
+    const WHATSAPP_NUM = "2250556777089";
+
+    function ajouter(nom, prix, cat) {
+        document.getElementById('bell').currentTime = 0;
+        document.getElementById('bell').play();
+        panier.push({nom, prix, cat});
+        majPanier();
+    }
+
+    function supprimerItem(nom) {
+        const index = panier.findLastIndex(i => i.nom === nom);
+        if (index > -1) panier.splice(index, 1);
+        majPanier();
+    }
+
+    function selectPay(el, mode) {
+        document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        modePay = mode;
+    }
+
+    function majPanier() {
+        const zone = document.getElementById('panier-ordonne');
+        zone.innerHTML = "";
+        let totalGeneral = 0;
+        ["GARBA", "PLATS", "BOISSONS"].forEach(cat => {
+            const items = panier.filter(i => i.cat === cat);
+            if(items.length > 0) {
+                let totalBloc = 0;
+                let html = `<div class="sous-total-bloc"><div class="bloc-nom">${cat}</div>`;
+                const comptes = {};
+                items.forEach(i => {
+                    comptes[i.nom] = (comptes[i.nom] || {qty:0, p:i.prix});
+                    comptes[i.nom].qty++;
+                });
+                for(let n in comptes) {
+                    let st = comptes[n].qty * comptes[n].p;
+                    totalBloc += st;
+                    html += `<div class="item-panier"><span>${comptes[n].qty} x ${n}</span><span>${st}F <i class="fas fa-trash-alt delete-btn" onclick="supprimerItem('${n}')"></i></span></div>`;
+                }
+                html += `<div style="text-align:right; color:var(--gold); font-weight:bold; margin-top:5px; border-top:1px solid #333;">Sous-total: ${totalBloc}F</div></div>`;
+                zone.innerHTML += html;
+                totalGeneral += totalBloc;
+            }
+        });
+        document.getElementById('total-val').innerText = totalGeneral;
+    }
+
+    function validerTout() {
+        const nom = document.getElementById('nom-client').value;
+        const note = document.getElementById('note-chef').value;
+        if(!nom || panier.length === 0) return alert("Nom et commande requis !");
+
+        let waMsg = `*⚜️ COMMANDE PRESTIGE DALOA ⚜️*\n👤 CLIENT: ${nom.toUpperCase()}\n📍 LIEU: ${document.getElementById('info-client').value}\n💳 PAIEMENT: ${modePay}\n`;
+        if(note) waMsg += `📝 *NOTE:* ${note}\n`;
+        waMsg += `\n`;
+
+        let recuHtml = "";
+        let totalFinal = 0;
+
+        ["GARBA", "PLATS", "BOISSONS"].forEach(cat => {
+            const items = panier.filter(i => i.cat === cat);
+            if(items.length > 0) {
+                waMsg += `*[${cat}]*\n`;
+                recuHtml += `<b>[${cat}]</b><br>`;
+                let totalB = 0;
+                const comptes = {};
+                items.forEach(i => {
+                    comptes[i.nom] = (comptes[i.nom] || {qty:0, p:i.prix});
+                    comptes[i.nom].qty++;
+                });
+                for(let n in comptes) {
+                    let st = comptes[n].qty * comptes[n].p;
+                    totalB += st;
+                    waMsg += `• ${comptes[n].qty} x ${n} = ${st}F\n`;
+                    recuHtml += `${comptes[n].qty} x ${n} : ${st}F<br>`;
+                }
+                waMsg += `_Sous-total: ${totalB}F_\n\n`;
+                totalFinal += totalB;
+            }
+        });
+
+        waMsg += `*💰 TOTAL : ${totalFinal} FCFA*`;
+        
+        document.getElementById('recu-infos').innerHTML = `<b>NOM :</b> ${nom.toUpperCase()}<br><b>PAIEMENT :</b> ${modePay}`;
+        document.getElementById('recu-ordonne').innerHTML = recuHtml;
+        document.getElementById('recu-note').innerHTML = note ? `<b>NOTE:</b> ${note}` : "";
+        document.getElementById('recu-total').innerText = totalFinal + " F";
+        
+        document.getElementById('view-boutique').style.display = "none";
+        document.getElementById('view-statique').style.display = "block";
+        document.getElementById('btn-wa-final').href = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(waMsg)}`;
+        confetti();
+        window.scrollTo(0,0);
+    }
+
+    function parrainer() {
+        let parrain = document.getElementById('nom-client').value || "Un ami";
+        let message = `*🥘 BON PLAT DE DALOA *\n\nFréro, je viens de manger ici ! C'est le top de Daloa. 😋\nCommande ici :\n${window.location.href}\n\n*Parrainé par : ${parrain}*`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`);
+    }
+
+    function revenir() {
+        document.getElementById('view-boutique').style.display = "block";
+        document.getElementById('view-statique').style.display = "none";
+    }
+</script>
+</body>
+</html>
